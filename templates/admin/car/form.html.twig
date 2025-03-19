@@ -1,0 +1,155 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ car is defined ? 'Modifier' : 'Ajouter' }} un véhicule{% endblock %}
+
+{% block body %}
+<div class="container mx-auto px-4 py-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold mb-8">{{ car is defined ? 'Modifier' : 'Ajouter' }} un véhicule</h1>
+
+        <form method="post" class="bg-white shadow-md rounded-lg p-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Informations générales -->
+                <div class="space-y-4">
+                    <h2 class="text-xl font-semibold mb-4">Informations générales</h2>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Marque</label>
+                        <select name="brand_id" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                            {% for brand in brands %}
+                                <option value="{{ brand.id }}" {% if car is defined and car.brand.id == brand.id %}selected{% endif %}>
+                                    {{ brand.name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Modèle</label>
+                        <input type="text" name="model" value="{{ car is defined ? car.model : '' }}" required
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Type de véhicule</label>
+                        <select name="type_id" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                            {% for type in types %}
+                                <option value="{{ type.id }}" {% if car is defined and car.type.id == type.id %}selected{% endif %}>
+                                    {{ type.name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Statut</label>
+                        <select name="status_id" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                            {% for status in statuses %}
+                                <option value="{{ status.id }}" {% if car is defined and car.status.id == status.id %}selected{% endif %}>
+                                    {{ status.type }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Caractéristiques -->
+                <div class="space-y-4">
+                    <h2 class="text-xl font-semibold mb-4">Caractéristiques</h2>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Année</label>
+                        <input type="number" name="year" value="{{ car is defined ? car.year : '' }}" required
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Nombre de portes</label>
+                        <input type="number" name="doors" value="{{ car is defined ? car.doors : '' }}" required
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Nombre de places</label>
+                        <input type="number" name="seats" value="{{ car is defined ? car.seats : '' }}" required
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Transmission</label>
+                        <select name="transmission" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                            <option value="Manuelle" {% if car is defined and car.transmission == 'Manuelle' %}selected{% endif %}>Manuelle</option>
+                            <option value="Automatique" {% if car is defined and car.transmission == 'Automatique' %}selected{% endif %}>Automatique</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Couleur</label>
+                        <input type="text" name="color" value="{{ car is defined ? car.color : '' }}" required
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                    </div>
+                </div>
+
+                <!-- Performance -->
+                <div class="space-y-4">
+                    <h2 class="text-xl font-semibold mb-4">Performance</h2>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Énergie</label>
+                        <select name="energy" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                            <option value="Essence" {% if car is defined and car.energy == 'Essence' %}selected{% endif %}>Essence</option>
+                            <option value="Diesel" {% if car is defined and car.energy == 'Diesel' %}selected{% endif %}>Diesel</option>
+                            <option value="Électrique" {% if car is defined and car.energy == 'Électrique' %}selected{% endif %}>Électrique</option>
+                            <option value="Hybride" {% if car is defined and car.energy == 'Hybride' %}selected{% endif %}>Hybride</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Puissance (ch)</label>
+                        <input type="number" name="power" value="{{ car is defined ? car.power : '' }}" required
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                    </div>
+                </div>
+
+                <!-- Photos et description -->
+                <div class="space-y-4">
+                    <h2 class="text-xl font-semibold mb-4">Photos et description</h2>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Photo principale</label>
+                        <input type="text" name="photo" value="{{ car is defined ? car.photo : '' }}" required
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Photos supplémentaires (JSON array)</label>
+                        <input type="text" name="additional_photos" value="{{ car is defined ? car.additionalPhotos|json_encode : '[]' }}" required
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Description</label>
+                        <textarea name="description" rows="4" required
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">{{ car is defined ? car.description : '' }}</textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Prix de location par jour (€)</label>
+                        <input type="number" step="0.01" name="rental_price" value="{{ car is defined ? car.rentalPrice : '' }}" required
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-6 flex justify-end space-x-4">
+                <a href="{{ path('app_admin_index') }}" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition-colors">
+                    Annuler
+                </a>
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors">
+                    {{ car is defined ? 'Modifier' : 'Ajouter' }}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %} 

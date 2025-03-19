@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %} - VROOOOOOOOOOOM</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>🚗</text></svg>">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        {% block stylesheets %}{% endblock %}
+        {% block javascripts %}{% endblock %}
+    </head>
+    <body class="bg-gray-50">
+        {% include 'partials/_navbar.html.twig' %}
+        
+        <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+            {% block body %}{% endblock %}
+        </main>
+
+        <footer class="bg-white shadow-lg mt-8">
+            <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">À propos de VROOM</h3>
+                        <p class="text-gray-600">Votre partenaire de confiance pour la location de véhicules. Nous vous proposons une large sélection de voitures pour tous vos besoins.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Liens rapides</h3>
+                        <ul class="space-y-2">
+                            <li><a href="{{ path('app_home') }}" class="text-gray-600 hover:text-gray-900">Accueil</a></li>
+                            <li><a href="{{ path('app_search') }}" class="text-gray-600 hover:text-gray-900">Rechercher</a></li>
+                            <li><a href="{{ path('app_about') }}" class="text-gray-600 hover:text-gray-900">À propos</a></li>
+                            <li><a href="{{ path('app_contact') }}" class="text-gray-600 hover:text-gray-900">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Contact</h3>
+                        <ul class="space-y-2 text-gray-600">
+                            <li>Email: contact@vroom.com</li>
+                            <li>Téléphone: +33 1 23 45 67 89</li>
+                            <li>Adresse: 123 Rue de Paris, 75001 Paris</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mt-8 border-t border-gray-200 pt-8 text-center text-gray-600">
+                    <p>&copy; {{ "now"|date("Y") }} VROOM. Tous droits réservés.</p>
+                </div>
+            </div>
+        </footer>
+    </body>
+</html>

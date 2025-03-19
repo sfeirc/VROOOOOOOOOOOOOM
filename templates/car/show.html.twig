@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ car.brand.name }} {{ car.model }}{% endblock %}
+
+{% block body %}
+<div class="container mx-auto px-4 py-8">
+    <div class="bg-white shadow-xl rounded-lg overflow-hidden">
+        <div class="relative h-96">
+            <img class="absolute h-full w-full object-cover" src="/assets/images/{{ car.photo }}" alt="{{ car.brand.name }} {{ car.model }}">
+            {% if car.status.type != 'Disponible' %}
+                <div class="absolute top-0 right-0 bg-red-500 text-white px-3 py-1 m-2 rounded">
+                    {{ car.status.type }}
+                </div>
+            {% endif %}
+        </div>
+        <div class="p-6">
+            <h1 class="text-3xl font-bold mb-4">{{ car.brand.name }} {{ car.model }}</h1>
+            <p class="text-gray-600 mb-6">{{ car.description }}</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h3 class="font-semibold text-gray-700 mb-2">Caractéristiques</h3>
+                    <ul class="space-y-2">
+                        <li><span class="text-gray-600">Année:</span> {{ car.year }}</li>
+                        <li><span class="text-gray-600">Portes:</span> {{ car.doors }}</li>
+                        <li><span class="text-gray-600">Places:</span> {{ car.seats }}</li>
+                        <li><span class="text-gray-600">Transmission:</span> {{ car.transmission }}</li>
+                        <li><span class="text-gray-600">Couleur:</span> {{ car.color }}</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h3 class="font-semibold text-gray-700 mb-2">Performance</h3>
+                    <ul class="space-y-2">
+                        <li><span class="text-gray-600">Énergie:</span> {{ car.energy }}</li>
+                        <li><span class="text-gray-600">Puissance:</span> {{ car.power }} ch</li>
+                        <li><span class="text-gray-600">Type:</span> {{ car.type.name }}</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h3 class="font-semibold text-gray-700 mb-2">Location</h3>
+                    <div class="text-3xl font-bold text-blue-600 mb-2">{{ car.rentalPrice }}€<span class="text-sm text-gray-600">/jour</span></div>
+                    {% if car.status.type == 'Disponible' %}
+                        <a href="#" class="block w-full bg-blue-500 text-white text-center py-2 rounded hover:bg-blue-600 transition-colors">
+                            Réserver maintenant
+                        </a>
+                    {% else %}
+                        <div class="bg-red-100 text-red-700 px-4 py-2 rounded">
+                            {{ car.status.type }}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            {% if car.additionalPhotos|length > 0 %}
+                <div class="mt-8">
+                    <h3 class="text-xl font-semibold mb-4">Photos supplémentaires</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                        {% for photo in car.additionalPhotos %}
+                            <div class="relative pb-[75%]">
+                                <img src="/assets/images/{{ photo }}" alt="{{ car.brand.name }} {{ car.model }}" class="absolute h-full w-full object-cover rounded">
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="mt-8 flex justify-between">
+        <a href="{{ path('app_home') }}" class="bg-gray-500 text-white px-6 py-2 rounded hover:bg-gray-600 transition-colors">
+            Retour à la liste
+        </a>
+    </div>
+</div>
+{% endblock %} 
