@@ -24,9 +24,23 @@ class SearchController extends AbstractController
         $brands = $request->query->all('brand');
         $types = $request->query->all('type');
         $energies = $request->query->all('energy');
-        $maxPrice = $request->query->get('price');
+        $maxPrice = $request->query->get('price') ? (float) $request->query->get('price') : null;
+        $yearMin = $request->query->get('year_min') ? (int) $request->query->get('year_min') : null;
+        $yearMax = $request->query->get('year_max') ? (int) $request->query->get('year_max') : null;
+        $transmissions = $request->query->all('transmission');
+        $sort = $request->query->get('sort', 'price_asc');
 
-        $cars = $carRepository->findByFilters($query, $brands, $types, $energies, $maxPrice);
+        $cars = $carRepository->findByFilters(
+            $query,
+            $brands,
+            $types,
+            $energies,
+            $maxPrice,
+            $yearMin,
+            $yearMax,
+            $transmissions,
+            $sort
+        );
 
         return $this->render('search/index.html.twig', [
             'cars' => $cars,
@@ -37,6 +51,10 @@ class SearchController extends AbstractController
             'selectedTypes' => $types,
             'selectedEnergies' => $energies,
             'selectedPrice' => $maxPrice,
+            'selectedYearMin' => $yearMin,
+            'selectedYearMax' => $yearMax,
+            'selectedTransmissions' => $transmissions,
+            'selectedSort' => $sort,
         ]);
     }
 

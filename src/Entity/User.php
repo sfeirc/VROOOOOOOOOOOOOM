@@ -7,8 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[UniqueEntity(fields: ['email'], message: 'Cet email est déjà utilisé')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -17,28 +19,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[Assert\Email(
-        message: 'L\'email {{ value }} n\'est pas valide.',
-    )]
+    #[Assert\NotBlank(message: 'L\'email est obligatoire')]
+    #[Assert\Email(message: 'L\'email {{ value }} n\'est pas valide')]
     private ?string $email = null;
 
     #[ORM\Column]
     private array $roles = [];
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'Le mot de passe est obligatoire')]
+    #[Assert\Length(min: 6, minMessage: 'Le mot de passe doit faire au moins {{ limit }} caractères')]
     private ?string $password = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 50)]
     #[Assert\NotBlank(message: 'Le prénom est obligatoire')]
     private ?string $firstName = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 50)]
     #[Assert\NotBlank(message: 'Le nom est obligatoire')]
     private ?string $lastName = null;
 
-    #[ORM\Column(length: 20)]
-    #[Assert\NotBlank(message: 'Le numéro de téléphone est obligatoire')]
+    #[ORM\Column(length: 20, nullable: true)]
     private ?string $phone = null;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $createdAt = null;
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable();
+    }
 
     public function getId(): ?int
     {
@@ -117,9 +127,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->phone;
     }
 
-    public function setPhone(string $phone): static
+    public function setPhone(?string $phone): static
     {
         $this->phone = $phone;
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    {
+        $this->createdAt = $createdAt;
         return $this;
     }
 } 

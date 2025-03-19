@@ -52,6 +52,36 @@
                     </div>
                 </div>
 
+                <!-- Year Range -->
+                <div class="mb-6">
+                    <h3 class="font-medium mb-2">Année</h3>
+                    <div class="space-y-2">
+                        <div class="flex items-center space-x-2">
+                            <input type="number" name="year_min" min="1900" max="{{ "now"|date("Y") }}" 
+                                class="w-24 px-2 py-1 border border-gray-300 rounded"
+                                placeholder="Min" value="{{ selectedYearMin|default('') }}">
+                            <span>-</span>
+                            <input type="number" name="year_max" min="1900" max="{{ "now"|date("Y") }}"
+                                class="w-24 px-2 py-1 border border-gray-300 rounded"
+                                placeholder="Max" value="{{ selectedYearMax|default('') }}">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Transmission Filter -->
+                <div class="mb-6">
+                    <h3 class="font-medium mb-2">Transmission</h3>
+                    <div class="space-y-2">
+                        {% for transmission in ['Manuelle', 'Automatique'] %}
+                        <label class="flex items-center">
+                            <input type="checkbox" name="transmission[]" value="{{ transmission }}" class="form-checkbox"
+                                {% if transmission in selectedTransmissions %}checked{% endif %}>
+                            <span class="ml-2">{{ transmission }}</span>
+                        </label>
+                        {% endfor %}
+                    </div>
+                </div>
+
                 <!-- Energy Filter -->
                 <div class="mb-6">
                     <h3 class="font-medium mb-2">Énergie</h3>
@@ -77,6 +107,17 @@
                             <span>200€</span>
                         </div>
                     </div>
+                </div>
+
+                <!-- Sort Options -->
+                <div class="mb-6">
+                    <h3 class="font-medium mb-2">Trier par</h3>
+                    <select name="sort" class="w-full px-3 py-2 border border-gray-300 rounded">
+                        <option value="price_asc" {% if selectedSort == 'price_asc' %}selected{% endif %}>Prix croissant</option>
+                        <option value="price_desc" {% if selectedSort == 'price_desc' %}selected{% endif %}>Prix décroissant</option>
+                        <option value="year_desc" {% if selectedSort == 'year_desc' %}selected{% endif %}>Année récente</option>
+                        <option value="year_asc" {% if selectedSort == 'year_asc' %}selected{% endif %}>Année ancienne</option>
+                    </select>
                 </div>
 
                 <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition-colors">

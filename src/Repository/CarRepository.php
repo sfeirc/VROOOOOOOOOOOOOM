@@ -76,8 +76,17 @@ class CarRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByFilters(?string $query = null, ?array $brands = null, ?array $types = null, ?array $energies = null, ?float $maxPrice = null): array
-    {
+    public function findByFilters(
+        ?string $query = null,
+        ?array $brands = null,
+        ?array $types = null,
+        ?array $energies = null,
+        ?float $maxPrice = null,
+        ?int $yearMin = null,
+        ?int $yearMax = null,
+        ?array $transmissions = null,
+        string $sort = 'price_asc'
+    ): array {
         $qb = $this->createQueryBuilder('c')
             ->join('c.brand', 'b')
             ->join('c.type', 't')
@@ -108,9 +117,39 @@ class CarRepository extends ServiceEntityRepository
                 ->setParameter('maxPrice', $maxPrice);
         }
 
-        return $qb->orderBy('c.rentalPrice', 'ASC')
-            ->getQuery()
-            ->getResult();
+        if ($yearMin) {
+            $qb->andWhere('c.year >= :yearMin')
+                ->setParameter('yearMin', $yearMin);
+        }
+
+        if ($yearMax) {
+            $qb->andWhere('c.year <= :yearMax')
+                ->setParameter('yearMax', $yearMax);
+        }
+
+        if ($transmissions && !empty($transmissions)) {
+            $qb->andWhere('c.transmission IN (:transmissions)')
+                ->setParameter('transmissions', $transmissions);
+        }
+
+        // Apply sorting
+        switch ($sort) {
+            case 'price_desc':
+                $qb->orderBy('c.rentalPrice', 'DESC');
+                break;
+            case 'year_desc':
+                $qb->orderBy('c.year', 'DESC');
+                break;
+            case 'year_asc':
+                $qb->orderBy('c.year', 'ASC');
+                break;
+            case 'price_asc':
+            default:
+                $qb->orderBy('c.rentalPrice', 'ASC');
+                break;
+        }
+
+        return $qb->getQuery()->getResult();
     }
 
     public function findHighlighted(): array

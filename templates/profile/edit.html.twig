@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier mon profil{% endblock %}
+
+{% block body %}
+<div class="min-h-screen bg-gray-50 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto">
+            <div class="bg-white shadow rounded-lg">
+                <div class="px-4 py-5 sm:p-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-lg leading-6 font-medium text-gray-900">
+                            Modifier le profil
+                        </h3>
+                        <a href="{{ path('app_profile') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            Retour au profil
+                        </a>
+                    </div>
+
+                    <form action="{{ path('app_profile_edit') }}" method="post" class="space-y-6">
+                        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                            <div>
+                                <label for="firstName" class="block text-sm font-medium text-gray-700">
+                                    Prénom
+                                </label>
+                                <div class="mt-1">
+                                    <input type="text" name="firstName" id="firstName" required
+                                        value="{{ user.firstName }}"
+                                        class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="lastName" class="block text-sm font-medium text-gray-700">
+                                    Nom
+                                </label>
+                                <div class="mt-1">
+                                    <input type="text" name="lastName" id="lastName" required
+                                        value="{{ user.lastName }}"
+                                        class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700">
+                                Email
+                            </label>
+                            <div class="mt-1">
+                                <input type="email" name="email" id="email" required
+                                    value="{{ user.email }}"
+                                    class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="phone" class="block text-sm font-medium text-gray-700">
+                                Téléphone
+                            </label>
+                            <div class="mt-1">
+                                <input type="tel" name="phone" id="phone"
+                                    value="{{ user.phone }}"
+                                    class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="password" class="block text-sm font-medium text-gray-700">
+                                Nouveau mot de passe (laisser vide pour ne pas le modifier)
+                            </label>
+                            <div class="mt-1">
+                                <input type="password" name="password" id="password"
+                                    class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                            </div>
+                        </div>
+
+                        <div class="flex justify-end">
+                            <button type="submit"
+                                class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                Enregistrer les modifications
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
