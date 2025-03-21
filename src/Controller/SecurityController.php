@@ -10,9 +10,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use App\Service\ErrorLoggerService;
 
 class SecurityController extends AbstractController
 {
+    public function __construct(
+        private ErrorLoggerService $errorLogger
+    ) {}
+
     #[Route('/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
@@ -27,6 +32,11 @@ class SecurityController extends AbstractController
             'last_username' => $lastUsername,
             'error' => $error,
         ]);
+    }
+
+    #[Route('/login_check', name: 'app_login_check')]
+    public function loginCheck(): void
+    {
     }
 
     #[Route('/register', name: 'app_register')]

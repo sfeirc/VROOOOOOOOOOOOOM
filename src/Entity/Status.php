@@ -8,13 +8,14 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: StatusRepository::class)]
+#[ORM\Table(name: 'status')]
 class Status
 {
     #[ORM\Id]
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(name: 'id', length: 50)]
     private ?string $id = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(name: 'type', length: 50)]
     private ?string $type = null;
 
     #[ORM\OneToMany(mappedBy: 'status', targetEntity: Car::class)]

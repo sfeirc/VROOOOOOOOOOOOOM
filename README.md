@@ -1,136 +1,83 @@
-# VROOM - Location de Véhicules
+# VROOOOOOOOOOOM - Location de Voitures de Luxe
 
-VROOM est une application web de location de véhicules développée avec Symfony 6.4.
+VROOOOOOOOOOOM est une application web de location de voitures de luxe développée avec Symfony 6.
 
-## 🚀 Fonctionnalités
+## Prérequis
 
-- 🔍 Recherche de véhicules par marque, modèle, type et prix
-- 👤 Système d'authentification (inscription/connexion)
-- 🚗 Catalogue de véhicules avec filtres
-- 📱 Interface responsive
-- 🔒 Sécurité renforcée
-- 📧 Système de contact
-- 👨‍💼 Interface d'administration
-
-## 🛠️ Technologies utilisées
-
-- PHP 8.2
-- Symfony 6.4
-- MySQL/MariaDB
-- Doctrine ORM
-- Twig
-- Tailwind CSS
-- Webpack Encore
-
-## 📋 Prérequis
-
-- PHP 8.2 ou supérieur
+- PHP 8.1 ou supérieur
 - Composer
+- MySQL 8.0 ou supérieur
 - Node.js et npm
-- MySQL/MariaDB
 - Symfony CLI
 
-## 🚀 Installation
+## Installation
 
-1. Cloner le repository :
+1. Cloner le projet
 ```bash
-git clone https://github.com/sfeirc/VROOOOOOOOOOOOOM.git
-cd VROOOOOOOOOOOOOM
+git clone https://github.com/votre-username/VROOOOOOOOOOOM.git
+cd VROOOOOOOOOOOM
 ```
 
-2. Installer les dépendances PHP :
+2. Installer les dépendances PHP
 ```bash
 composer install
 ```
 
-3. Installer les dépendances JavaScript :
+3. Installer les dépendances JavaScript
 ```bash
 npm install
+npm run build
 ```
 
-4. Créer la base de données :
+4. Configurer la base de données
+- Copier le fichier `.env` en `.env.local`
+- Modifier les paramètres de connexion à la base de données dans `.env.local`
+```
+DATABASE_URL="mysql://username:password@127.0.0.1:3306/vrooooooooooom?serverVersion=8.0"
+```
+
+5. Créer et initialiser la base de données
 ```bash
-php bin/console doctrine:database:create
+mysql -u root -p < data/database.sql
+php bin/console app:import-cars
 ```
 
-5. Exécuter les migrations :
+6. Démarrer le serveur Symfony
 ```bash
-php bin/console doctrine:migrations:migrate
+symfony serve -d
 ```
 
-6. Charger les fixtures :
-```bash
-php bin/console doctrine:fixtures:load
-```
+## Accès à l'application
 
-7. Compiler les assets :
-```bash
-npm run dev
-```
+- URL: `http://localhost:8000`
+- Admin:
+  - Email: admin@vrooooooooooom.fr
+  - Mot de passe: admin
 
-8. Configurer le fichier .env :
-```env
-APP_ENV=dev
-APP_SECRET=your_secret_here
-DATABASE_URL="mysql://user:password@127.0.0.1:3306/vroom?serverVersion=10.11.6-MariaDB&charset=utf8mb4"
-```
+## Fonctionnalités
 
-## 🎯 Utilisation
+- Recherche de véhicules avec filtres (marque, type, prix, etc.)
+- Système de réservation
+- Gestion des véhicules (CRUD)
+- Interface d'administration
+- Authentification et gestion des utilisateurs
 
-1. Lancer le serveur Symfony :
-```bash
-symfony server:start
-```
+## Structure du projet
 
-2. Accéder à l'application :
-```
-http://localhost:8000
-```
+- `src/` : Code source PHP
+- `templates/` : Templates Twig
+- `public/` : Fichiers publics (images, CSS, JS)
+- `data/` : Scripts SQL et données
+- `config/` : Configuration Symfony
 
-## 👥 Comptes par défaut
+## Contribution
 
-### Administrateur
-- Email: admin@vroom.com
-- Mot de passe: admin123
-
-### Utilisateur test
-- Email: user@vroom.com
-- Mot de passe: user123
-
-## 📝 Structure du projet
-
-```
-VROOOOOOOOOOOOOM/
-├── assets/              # Assets JavaScript et CSS
-├── config/             # Configuration de l'application
-├── migrations/         # Migrations de la base de données
-├── public/            # Fichiers publics
-├── src/               # Code source
-│   ├── Controller/    # Contrôleurs
-│   ├── Entity/        # Entités
-│   ├── Repository/    # Repositories
-│   └── DataFixtures/  # Données de test
-├── templates/         # Templates Twig
-└── vendor/           # Dépendances PHP
-```
-
-## 🔒 Sécurité
-
-- Authentification sécurisée
-- Protection CSRF
-- Validation des données
-- Hachage des mots de passe
-- Protection des routes sensibles
-
-## 📄 Licence
-
-Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
-
-## 👥 Contribution
-
-Les contributions sont les bienvenues ! N'hésitez pas à :
 1. Fork le projet
-2. Créer une branche pour votre fonctionnalité
-3. Commiter vos changements
-4. Pousser vers la branche
-5. Ouvrir une Pull Request 
+2. Créer une branche pour votre fonctionnalité (`git checkout -b feature/ma-fonctionnalite`)
+3. Commit vos changements (`git commit -m 'Ajout de ma fonctionnalité'`)
+4. Push vers la branche (`git push origin feature/ma-fonctionnalite`)
+5. Créer une Pull Request
+
+## Licence
+
+Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails. 

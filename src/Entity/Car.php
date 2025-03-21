@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CarRepository::class)]
+#[ORM\Table(name: 'vehicule')]
 class Car
 {
     #[ORM\Id]
@@ -17,55 +18,55 @@ class Car
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 100)]
+    #[ORM\Column(name: 'modele', length: 100)]
     #[Assert\NotBlank]
     private ?string $model = null;
 
-    #[ORM\Column(nullable: true)]
+    #[ORM\Column(name: 'doors', nullable: true)]
     private ?int $doors = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(name: 'transmission', length: 50)]
     #[Assert\NotBlank]
     private ?string $transmission = null;
 
-    #[ORM\Column]
+    #[ORM\Column(name: 'annee')]
     #[Assert\Positive]
     private ?int $year = null;
 
-    #[ORM\Column(length: 50, nullable: true)]
+    #[ORM\Column(name: 'color', length: 50, nullable: true)]
     private ?string $color = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(name: 'image_principale', length: 255, nullable: true)]
     private ?string $photo = null;
 
-    #[ORM\Column(type: Types::JSON, nullable: true)]
+    #[ORM\Column(name: 'images_supplementaires', type: Types::JSON, nullable: true)]
     private ?array $additionalPhotos = null;
 
-    #[ORM\Column(length: 50, nullable: true)]
+    #[ORM\Column(name: 'energie', length: 50, nullable: true)]
     private ?string $energy = null;
 
-    #[ORM\Column(nullable: true)]
+    #[ORM\Column(name: 'power', nullable: true)]
     private ?int $power = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 15, scale: 2, nullable: true)]
+    #[ORM\Column(name: 'prix_journalier', type: Types::DECIMAL, precision: 15, scale: 2, nullable: true)]
     private ?string $rentalPrice = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[ORM\Column(name: 'description', type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\Column(nullable: true)]
+    #[ORM\Column(name: 'seats', nullable: true)]
     private ?int $seats = null;
 
     #[ORM\ManyToOne(inversedBy: 'cars')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(name: 'status_id', referencedColumnName: 'id', nullable: false)]
     private ?Status $status = null;
 
     #[ORM\ManyToOne(inversedBy: 'cars')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(name: 'brand_entity_id', referencedColumnName: 'id', nullable: false)]
     private ?Brand $brand = null;
 
     #[ORM\ManyToOne(inversedBy: 'cars')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(name: 'type_entity_id', referencedColumnName: 'id', nullable: false)]
     private ?VehicleType $type = null;
 
     #[ORM\OneToMany(mappedBy: 'car', targetEntity: Reservation::class)]
